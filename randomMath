@@ -1,0 +1,108 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Zadajte počet prvkov poľa: ");
+        int N = int.Parse(Console.ReadLine());
+
+        int[] pole = new int[N];
+
+        // vytvorenie inštancie triedy Pole a volanie jej metód
+        Pole pole1 = new Pole();
+        pole1.NaplnPole(pole);
+        pole1.VypisPole(pole);
+        int pocetDelitelnych = pole1.PocetDelitelnych(pole, 3, 5);
+        Console.WriteLine("Počet čísel deliteľných číslom 3 a 5 je: {0}", pocetDelitelnych);
+        double aritPriemer = pole1.AritmeticPriemerNeparne(pole);
+        Console.WriteLine("Aritmetický priemer nepárnych čísel je: {0}", aritPriemer);
+        pole1.VypisIndexMaximalneho(pole);
+    }
+}
+
+class Pole
+{
+    public void VypisPole(int[] pole)
+    {
+        Console.Write("Pole obsahuje tieto prvky: ");
+        foreach (int i in pole)
+        {
+            Console.Write(i + " ");
+        }
+        Console.WriteLine();
+    }
+
+    public void NaplnPole(int[] pole, int dolnyInterval = 0, int hornyInterval = 100)
+    {
+        Random rnd = new Random();
+
+        for (int i = 0; i < pole.Length; i++)
+        {
+            pole[i] = rnd.Next(dolnyInterval, hornyInterval);
+        }
+    }
+
+    public int PocetDelitelnych(int[] pole, int delitel1, int delitel2)
+    {
+        int pocet = 0;
+
+        foreach (int i in pole)
+        {
+            if (i % delitel1 == 0 && i % delitel2 == 0)
+            {
+                pocet++;
+            }
+        }
+
+        return pocet;
+    }
+
+    public double AritmeticPriemerNeparne(int[] pole)
+    {
+        int pocet = 0;
+        int suma = 0;
+
+        foreach (int i in pole)
+        {
+            if (i % 2 != 0)
+            {
+                pocet++;
+                suma += i;
+            }
+        }
+
+        if (pocet == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return (double)suma / pocet;
+        }
+    }
+
+    public void VypisIndexMaximalneho(int[] pole)
+    {
+        int maxHodnota = pole[0];
+
+        //nájdenie maximálnej hodnoty v poli
+        foreach (int i in pole)
+        {
+            if (i > maxHodnota)
+            {
+                maxHodnota = i;
+            }
+        }
+
+        Console.Write("Indexy maximálnej hodnoty sú: ");
+        for (int i = 0; i < pole.Length; i++)
+        {
+            if (pole[i] == maxHodnota)
+            {
+                Console.Write(i + " ");
+            }
+        }
+        Console.WriteLine();
+    }
+}
